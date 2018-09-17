@@ -5,6 +5,13 @@ import java.util.Vector;
 
 public class SearchMap {
 
+    /**
+     *
+     * @param FileName
+     * @param nodes
+     * @param allDestinations
+     * @return
+     */
     public static String ReadAndParseFile(String FileName, HashMap<String, Vertex> nodes, Vector<String> allDestinations){
         StringBuilder sb = new StringBuilder();
         String origin = "";

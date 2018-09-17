@@ -20,14 +20,14 @@ public class FlightMap {
                     visited,
                     0
             );
-            addRoute(route, sb);
+            sb.append(addRoute(route));
         }
 
         return sb.toString();
     }
 
-    public void addRoute(String[] route, StringBuilder sb){
-
+    public String addRoute(String[] route){
+        StringBuilder sb = new StringBuilder();
         if(route != null){
             sb.append(route[route.length-2] + "\t");
 
@@ -42,6 +42,7 @@ public class FlightMap {
 
             sb.append("\t$" + route[route.length-1] + "\n");
         }
+        return sb.toString();
     }
 
 
@@ -58,7 +59,7 @@ public class FlightMap {
 
         if(origin.equalsIgnoreCase(destination)){
             visited.addElement(Double.toString(cost));
-            return (String[]) visited.toArray();
+            return visited.toArray(new String[visited.size()]);
         }
 
 

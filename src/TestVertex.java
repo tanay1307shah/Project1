@@ -8,10 +8,9 @@ import static org.junit.Assert.*;
 public class TestVertex {
 
     @Test
-    public void setEdges() {
+    public void setEdgesTest() {
         Vertex v = new Vertex("P");
         HashMap<String,Double> map = new HashMap<>();
-
 
         map.put("X", (double) 200);
         map.put("y", (double) 350);
@@ -30,14 +29,15 @@ public class TestVertex {
     }
 
     @Test
-    public void getName() {
+    public void getNameTest() {
         Vertex v = new Vertex("x");
+        //System.out.println(v.getName());
         assertTrue(v.getName().equalsIgnoreCase("x"));
         assertEquals(v.getName(),"x");
     }
 
     @Test
-    public void setName() {
+    public void setNameTest() {
         Vertex v  = new Vertex("p");
         v.setName("s");
         assertEquals(v.getName(),"s");
