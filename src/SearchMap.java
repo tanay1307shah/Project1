@@ -1,24 +1,34 @@
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class SearchMap {
 
-    private static void ReadAndParseFile(String FileName,HashMap<String,Vertex> nodes){
+    public static String ReadAndParseFile(String FileName, HashMap<String, Vertex> nodes, Vector<String> allDestinations){
         StringBuilder sb = new StringBuilder();
+        String origin = "";
         try {
             Scanner sc = new Scanner(new File(FileName));
 
-            String origin = sc.nextLine();
+            origin = sc.nextLine();
             nodes.put(origin,new Vertex(origin));
 
             while(sc.hasNextLine()){
                 String curr = sc.nextLine();
-                String[] data = curr.split(" ");
+                String[] data = curr.split(" "  );
 
                 String currOrigin = data[0];
                 String currDestination = data[1];
                 double currAmount = Double.parseDouble(data[2]);
+
+                if(!allDestinations.contains(currOrigin) && !currOrigin.equalsIgnoreCase(origin)){
+                    allDestinations.add(currOrigin);
+                }
+
+                if(!allDestinations.contains(currDestination) && !currDestination.equalsIgnoreCase(origin)){
+                    allDestinations.add(currDestination);
+                }
 
                 if(nodes.containsKey(currOrigin)){
                     Vertex currVertex = nodes.get(currOrigin);
@@ -29,20 +39,29 @@ public class SearchMap {
 
                 }else{
                     Vertex currVertex = new Vertex(currOrigin);
+
                     currVertex.getEdges().put(
                             currDestination,
                             currAmount
                     );
+                    nodes.put(currOrigin,currVertex);
+                }
+
+
+                if(!nodes.containsKey(currDestination)){
+                    Vertex currVertex = new Vertex(currDestination);
+                    nodes.put(currDestination,currVertex);
                 }
             }
             sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return origin;
     }
 
-    private static void WriteToFile(String Filename, String data){
-
+    public static void WriteToFile(String Filename, String data){
+        System.out.println(data);
     }
 
     public static void main(String [] args){
@@ -50,6 +69,7 @@ public class SearchMap {
         String outputFile = "";
 
         HashMap<String,Vertex> map = new HashMap<>();
+        Vector<String> allDestinations = new Vector<>();
         if(args.length !=2){
             System.out.println("Error: Please enter correct command line inputs");
             System.exit(0);
@@ -57,8 +77,10 @@ public class SearchMap {
         inputFile = args[0];
         outputFile = args[1];
 
-        ReadAndParseFile(inputFile,map);
-
+        String origin = ReadAndParseFile(inputFile,map,allDestinations);
+        FlightMap fm = new FlightMap();
+        String data = fm.findFlights(map,origin,allDestinations);
+        WriteToFile(outputFile,data);
 
     }
 
