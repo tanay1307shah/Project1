@@ -6,6 +6,13 @@ import java.util.Vector;
 public class FlightMap {
 
 
+    /**
+     * A main function which regulates the search route function  and calls it for every destination.
+     * @param map A HashMap from String -> vertex , where string is the vertex name.
+     * @param origin The origin city for flight search.
+     * @param allDestinations A vector of Strings, keeping track of all the destination where we need to find route to.
+     * @return A String with route from origin to all the destinations and the cost as well.
+     */
     public String findFlights(HashMap<String, Vertex> map, String origin, Vector<String> allDestinations){
 
         StringBuilder sb = new StringBuilder();
@@ -27,6 +34,11 @@ public class FlightMap {
         return sb.toString();
     }
 
+    /**
+     * Just converts the route string Array into a ouput string and adds it to the output.
+     * @param route A String Array of the route from the origin to the destination.
+     * @return A string correctly formatted with the path and cost to the destination.
+     */
     public String addRoute(String[] route){
         StringBuilder sb = new StringBuilder();
         if(route != null){
@@ -55,13 +67,13 @@ public class FlightMap {
 
 
     /**
-     *
-     * @param origin
-     * @param destination
-     * @param map
-     * @param visited
-     * @param cost
-     * @return
+     * Searches Route from Origin to the Desination in the Map.
+     * @param origin The origin city from where we want to start.
+     * @param destination The destination city where we want to reach.
+     * @param map The map of String -> Vertex to get access ot all the cities object.
+     * @param visited The cities that are already visited during the path finding, empty at start.
+     * @param cost The total cost of the path that is being taken, will be 0 at start.
+     * @return A String Array of the route from origin to destination.
      */
     public String[] searchRoute(String origin, String destination,HashMap<String,Vertex> map,Vector<String> visited, double cost){
 
@@ -105,7 +117,6 @@ public class FlightMap {
         }else{
             return visited.toArray(new String[visited.size()]);
         }
-        //return null;//visited.toArray(new String[visited.size()]);
     }
 
 }

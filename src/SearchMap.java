@@ -6,11 +6,11 @@ import java.util.Vector;
 public class SearchMap {
 
     /**
-     *
-     * @param FileName
-     * @param nodes
-     * @param allDestinations
-     * @return
+     * Reads the input file and creates a grpah together.
+     * @param FileName The input file Name, provided by user as CLI argument
+     * @param nodes The Map of String -> vertex, mapping an object for each city, empty at the Start, populated in this function.
+     * @param allDestinations A vector of string to store all the destinations to where path has to be found, Empty at start, populted in this function
+     * @return the origin city from where we need to start the search.
      */
     public static String ReadAndParseFile(String FileName, HashMap<String, Vertex> nodes, Vector<String> allDestinations){
         StringBuilder sb = new StringBuilder();
@@ -87,8 +87,8 @@ public class SearchMap {
     }
 
     /**
-     *
-     * @param args
+     * The main driver tor regulate the whole application
+     * @param args Store CLI inputs, input and output file name for this application.
      */
     public static void main(String [] args){
         String inputFile = "";
