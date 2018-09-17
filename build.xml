@@ -30,7 +30,13 @@
 
     <!-- Generate javadocs for current project into docs dir -->
     <target name="doc" depends="init" description="generate documentation">
-        <javadoc sourcepath="${source.dir}" destdir="${doc.dir}" />
+        <javadoc sourcepath="${source.dir}" destdir="${doc.dir}" >
+            <fileset dir="${source.dir}" defaultexcludes="yes">
+                <exclude name="TestFlightMap"/>
+                <exclude name="TestSearchMap"/>
+                <exclude name="TestVertex"/>
+            </fileset>
+        </javadoc>
     </target>
 
     <!-- Delete the build & doc directories and Emacs backup (*~) files -->
@@ -53,7 +59,7 @@
 
 
 
-    <target name="test" depends="compile">
+    <target name="test" depends="compile" description="Runs Unit Test">
         <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
             <test name="TestVertex"/>
             <test name="TestSearchMap"/>
