@@ -9,11 +9,12 @@ public class FlightMap {
     public String findFlights(HashMap<String, Vertex> map, String origin, Vector<String> allDestinations){
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Destination  \t  Flight Route from " + origin + "\t  Total Cost\n");
+        sb.append("Destination               Flight Route from " + origin + "               Total Cost\n");
 
-        Vector<String> visited = new Vector<>();
+
         String[] route;
         for(int i=0; i < allDestinations.size();i++) {
+            Vector<String> visited = new Vector<>();
             route = searchRoute(origin,
                     allDestinations.elementAt(i),
                     map,
@@ -29,18 +30,25 @@ public class FlightMap {
     public String addRoute(String[] route){
         StringBuilder sb = new StringBuilder();
         if(route != null){
-            sb.append(route[route.length-2] + "\t");
+            sb.append(route[route.length-2] + "                         ");
 
+            String temp = "";
+            int cnt =0;
             for(int j =0; j < route.length-1;j++){
                 if(j == 0){
-                    sb.append(route[j]);
+                    temp += route[j];
+                    //sb.append(route[j]);
+                    cnt++;
                 }
                 else{
-                    sb.append("," + route[j]);
+                    temp += "," + route[j];
+ //                    sb.append("," + route[j]);
+                    cnt +=2;
                 }
             }
 
-            sb.append("\t$" + route[route.length-1] + "\n");
+            String line = String.format("%1$-10s %2$34s",temp,"$" + route[route.length-1] + "\n");
+            sb.append(line);
         }
         return sb.toString();
     }
@@ -57,28 +65,47 @@ public class FlightMap {
      */
     public String[] searchRoute(String origin, String destination,HashMap<String,Vertex> map,Vector<String> visited, double cost){
 
+
+        visited.add(origin);
         if(origin.equalsIgnoreCase(destination)){
             visited.addElement(Double.toString(cost));
             return visited.toArray(new String[visited.size()]);
         }
 
 
+
         HashMap<String, Double> currEdges = map.get(origin).getEdges();
 
+        if(currEdges.size() == 0 && !origin.equalsIgnoreCase(destination)){
+            return null;
+        }
+
         Iterator it = currEdges.entrySet().iterator();
+        String[] temp = null;
         while (it.hasNext()) {
+
             Map.Entry pair = (Map.Entry) it.next();
 
             String currDestination = (String) pair.getKey();
             double currCost = (double) pair.getValue();
 
             if(!visited.contains(currDestination)){
-                visited.add(currDestination);
-                searchRoute(currDestination,destination,map,visited,cost + currCost);
+               temp = searchRoute(currDestination,destination,map,visited,cost + currCost);
+
+               if(temp == null){
+                   visited.removeElementAt(visited.size()-1);
+               }else{
+                   break;
+               }
             }
 
         }
-        return null;
+        if(temp == null){
+            return null;
+        }else{
+            return visited.toArray(new String[visited.size()]);
+        }
+        //return null;//visited.toArray(new String[visited.size()]);
     }
 
 }

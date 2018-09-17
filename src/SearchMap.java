@@ -68,7 +68,15 @@ public class SearchMap {
     }
 
     public static void WriteToFile(String Filename, String data){
-        System.out.println(data);
+
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(Filename));
+            writer.write(data);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String [] args){

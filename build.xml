@@ -4,6 +4,9 @@
     <property name="build.dir" location="bin"/>
     <property name="doc.dir" location="doc"/>
     <property name="lib.dir" location="lib" />
+    <property name="dist.dir" location="dist" />
+    <property name='test.dir' location="../../Project1/test"/>
+    <property name="report.dir" location='../../Project1/bin/test-reports'/>
 
 
     <path id="classPath.test">
@@ -14,6 +17,7 @@
     <!-- set up some directories used by this project -->
     <target name="init" description="setup project directories">
         <mkdir dir="${build.dir}" />
+        <mkdir dir="${dist.dir}" />
         <mkdir dir="${doc.dir}" />
     </target>
 
@@ -33,20 +37,29 @@
     <target name="clean" description="tidy up the workspace">
         <delete dir="${build.dir}" />
         <delete dir="${doc.dir}" />
+        <delete dir="${dist.dir}" />
         <delete>
             <fileset defaultexcludes="no" dir="${source.dir}" includes="**/*~" />
         </delete>
     </target>
 
+    <target name="dist" depends="compile" description="generate the distribution">
+        <jar jarfile="${dist.dir}/Project1.jar" basedir="${build.dir}" includes="**">
+            <manifest>
+                <attribute name="Main-Class" value="SearchMap" />
+            </manifest>
+        </jar>
+    </target>
 
 
-    <target name="test" depends="compile">
+
+   <!-- <target name="test" depends="compile">
 
         <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
 
             <test name="${source.dir}/TestVertex"/>
-            <!--<test name="${source.dir}/TestSearchMap"/>-->
-            <!--<test name="${source.dir}/TestFlightMap"/>-->
+            &lt;!&ndash;<test name="${source.dir}/TestSearchMap"/>&ndash;&gt;
+            &lt;!&ndash;<test name="${source.dir}/TestFlightMap"/>&ndash;&gt;
 
             <classpath refid="classPath.test" />
             <classpath>
@@ -55,6 +68,33 @@
 
 
         </junit>
+
+    </target>-->
+
+    <target name="test" description="runs Junit tests" depends="compile">
+
+        <junit printsummary="yes" haltonfailure="no">
+
+
+            <classpath location="${build.dir}"/>
+            <classpath location="../../Project1/lib/junit-4.10.jar"/>
+
+            <formatter type="xml"/>
+            <formatter type="plain"/>
+
+            <batchtest fork="yes" todir="${report.dir}">
+                <fileset dir="${source.dir}">
+                    <include name="**/*Test*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <junitreport todir="${report.dir}">
+            <fileset dir="${report.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${report.dir}"/>
+        </junitreport>
 
     </target>
 

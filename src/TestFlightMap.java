@@ -26,13 +26,13 @@ public class TestFlightMap {
         String recieved  = fm.findFlights(map,origin,allDestinations);
 
         String expected = "Destination\tFlight Route from P\tTotal Cost\n" +
-                "R\tP,R\t$300\n" +
-                "X\tP,R,X\t$500\n" +
-                "W\tP,W\t$200\n" +
-                "S\tP,W,S\t$450\n" +
-                "T\tP,W,S,T\t$750\n" +
-                "Y\tP,W,Y\t$700\n" +
-                "Z\tP,W,Y,Z\t$1150";
+                "R               P,R\t$300\n" +
+                "X               P,R,X\t$500\n" +
+                "W               P,W\t$200\n" +
+                "S               P,W,S\t$450\n" +
+                "T               P,W,S,T\t$750\n" +
+                "Y               P,W,Y\t$700\n" +
+                "Z               P,W,Y,Z\t$1150";
 
         assertTrue(recieved.length() == expected.length());
         assertEquals(expected,recieved);
