@@ -10,7 +10,7 @@
 
 
     <path id="classPath.test">
-        <pathelement location="${lib.dir}/junit-4.12.jar" />
+        <pathelement location="${lib.dir}/junit-4.10.jar" />
         <pathelement location="${lib.dir}/hamcrest-core-1.3.jar"/>
     </path>
 
@@ -53,51 +53,17 @@
 
 
 
-   <!-- <target name="test" depends="compile">
-
+    <target name="test" depends="compile">
         <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
-
-            <test name="${source.dir}/TestVertex"/>
-            &lt;!&ndash;<test name="${source.dir}/TestSearchMap"/>&ndash;&gt;
-            &lt;!&ndash;<test name="${source.dir}/TestFlightMap"/>&ndash;&gt;
+            <test name="TestVertex"/>
+            <test name="TestSearchMap"/>
+            <test name="TestFlightMap"/>
 
             <classpath refid="classPath.test" />
             <classpath>
                 <pathelement location="${build.dir}"/>
             </classpath>
-
-
         </junit>
-
-    </target>-->
-
-    <target name="test" description="runs Junit tests" depends="compile">
-
-        <junit printsummary="yes" haltonfailure="no">
-
-
-            <classpath location="${build.dir}"/>
-            <classpath location="../../Project1/lib/junit-4.10.jar"/>
-
-            <formatter type="xml"/>
-            <formatter type="plain"/>
-
-            <batchtest fork="yes" todir="${report.dir}">
-                <fileset dir="${source.dir}">
-                    <include name="**/*Test*.java"/>
-                </fileset>
-            </batchtest>
-        </junit>
-
-        <junitreport todir="${report.dir}">
-            <fileset dir="${report.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${report.dir}"/>
-        </junitreport>
-
     </target>
-
-
 
 </project>
